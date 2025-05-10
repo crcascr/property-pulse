@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import "@/assets/styles/globals.css";
 import { Metadata } from "next";
+import { Navbar } from "@/components";
 
 interface Props {
   readonly children: ReactNode;
@@ -17,7 +18,8 @@ export default function MainLayout({ children }: Props) {
   return (
     <html lang="en">
       <body>
-        <div>{children}</div>
+        <Navbar />
+        <main>{children}</main>
       </body>
     </html>
   );
