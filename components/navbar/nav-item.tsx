@@ -2,7 +2,8 @@ import { NavItemProps } from "@/interfaces/navbar";
 import Link from "next/link";
 
 // Main NavItem component
-const NavItem = ({ href, text, selected, icon }: NavItemProps) => {
+const NavItem = ({ href, text, selected, show = true, icon }: NavItemProps) => {
+  if (!show) return null;
   return (
     <Link
       href={href}
@@ -17,12 +18,21 @@ const NavItem = ({ href, text, selected, icon }: NavItemProps) => {
 };
 
 // Desktop variant
-const Desktop = ({ href, text, selected, icon }: NavItemProps) => {
-  return <NavItem href={href} text={text} selected={selected} icon={icon} />;
+const Desktop = ({ href, text, selected, show = true, icon }: NavItemProps) => {
+  return (
+    <NavItem
+      href={href}
+      text={text}
+      selected={selected}
+      show={show}
+      icon={icon}
+    />
+  );
 };
 
 // Mobile variant with different styling
-const Mobile = ({ href, text, selected, icon }: NavItemProps) => {
+const Mobile = ({ href, text, selected, show = true, icon }: NavItemProps) => {
+  if (!show) return null;
   return (
     <Link
       href={href}

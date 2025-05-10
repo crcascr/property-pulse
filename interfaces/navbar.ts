@@ -4,7 +4,6 @@ export interface NavItemProps {
   href: string;
   text: string;
   selected?: boolean;
+  show?: boolean;
   icon?: ReactNode;
 }
-
-
