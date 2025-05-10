@@ -1,3 +1,12 @@
+import { Footer, Hero } from "@/components";
+import { InfoBoxes } from "@/components/hero/info-boxes";
+
 export default function HomePage() {
-  return <div>Home Page</div>;
+  return (
+    <>
+      <Hero />
+      <InfoBoxes />
+      <Footer />
+    </>
+  );
 }

@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/images/logo-white.png";
 import profileDefault from "@/assets/images/profile.png";
 import { NavItemProps } from "@/interfaces/navbar";
 import NavItem from "@/components/navbar/nav-item";
 import { FaBars, FaGoogle, FaRegBell } from "react-icons/fa";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { HiHome } from "react-icons/hi2";
 
 export const Navbar = () => {
   const pathname = usePathname();
@@ -56,13 +56,9 @@ export const Navbar = () => {
 
           <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
             <Link className="flex flex-shrink-0 items-center" href="/">
-              <Image
-                src={logo}
-                alt="PropertyPulse"
-                width={100}
-                height={100}
-                className="h-10 w-auto"
-              />
+              <div className="h-10 w-10 flex items-center justify-center rounded-full bg-white">
+                <HiHome className="text-blue-700 h-8 w-8" />
+              </div>
               <span className="hidden md:block text-white text-2xl font-bold ml-2">
                 PropertyPulse
               </span>
