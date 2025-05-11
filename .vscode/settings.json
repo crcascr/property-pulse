@@ -1,5 +1,7 @@
 {
     "conventionalCommits.scopes": [
-        "base"
+        "base",
+        "home",
+        "properties"
     ]
 }

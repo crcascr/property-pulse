@@ -1,4 +1,4 @@
-import { Footer, Hero } from "@/components";
+import { Hero } from "@/components";
 import { InfoBoxes } from "@/components/hero/info-boxes";
 
 export default function HomePage() {
@@ -6,7 +6,6 @@ export default function HomePage() {
     <>
       <Hero />
       <InfoBoxes />
-      <Footer />
     </>
   );
 }
