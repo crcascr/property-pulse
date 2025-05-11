@@ -97,7 +97,7 @@ interface RateProps {
 
 const Rate = ({ label }: RateProps) => {
   return (
-    <p>
+    <p className="flex items-center">
       <FaMoneyBill className="inline mr-2" />
       {label}
     </p>
