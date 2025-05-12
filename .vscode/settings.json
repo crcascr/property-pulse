@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "base",
         "home",
-        "properties"
+        "properties",
+        "api"
     ]
 }
