@@ -37,6 +37,6 @@ export interface PropertyInterface extends Document {
   };
   images?: string[];
   is_featured?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }

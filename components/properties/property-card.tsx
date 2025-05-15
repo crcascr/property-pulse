@@ -1,24 +1,28 @@
-import { PropertyCardProps, PropertyRates } from "@/interfaces";
+import { PropertiesResponse, PropertyRates } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { FaMapMarker } from "react-icons/fa";
 import { FaBath, FaBed, FaMoneyBill, FaRulerCombined } from "react-icons/fa";
 
-export const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
-  const getPropertyRate = (rates: PropertyRates) => {
-    if (rates.monthly) {
-      return `${rates.monthly}/mo`;
-    } else if (rates.weekly) {
-      return `${rates.weekly}/wk`;
-    } else if (rates.nightly) {
-      return `${rates.nightly}/night`;
+export const PropertyCard = ({
+  property,
+}: {
+  property: PropertiesResponse;
+}) => {
+  const getPropertyRate = (rates: PropertyRates | undefined) => {
+    if (rates?.monthly) {
+      return `${rates?.monthly}/mo`;
+    } else if (rates?.weekly) {
+      return `${rates?.weekly}/wk`;
+    } else if (rates?.nightly) {
+      return `${rates?.nightly}/night`;
     }
   };
   return (
     <div className="rounded-xl shadow-md relative">
       <Image
-        src={`/images/properties/${property.images[0]}`}
+        src={`/images/properties/${property?.images?.[0]}`}
         alt={property.name}
         height={0}
         width={0}
@@ -52,16 +56,16 @@ export const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
           />
         </div>
         <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
-          {property.rates.nightly && <Rate label="Nightly" />}
-          {property.rates.weekly && <Rate label="Weekly" />}
-          {property.rates.monthly && <Rate label="Monthly" />}
+          {property?.rates?.nightly && <Rate label="Nightly" />}
+          {property?.rates?.weekly && <Rate label="Weekly" />}
+          {property?.rates?.monthly && <Rate label="Monthly" />}
         </div>
         <div className="border border-gray-100 mb-5"></div>
         <div className="flex flex-col lg:flex-row justify-between mb-4">
           <div className="flex align-middle gap-2 mb-4 lg:mb-0 items-center">
             <FaMapMarker className="text-lg text-orange-700" />
             <span className="text-orange-700">
-              {property.location.city}, {property.location.state}
+              {property?.location?.city}, {property?.location?.state}
             </span>
           </div>
           <Link

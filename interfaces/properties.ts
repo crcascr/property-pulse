@@ -1,3 +1,5 @@
+import { PropertyInterface } from "./models";
+
 export interface PropertyLocation {
   street: string;
   city: string;
@@ -6,9 +8,9 @@ export interface PropertyLocation {
 }
 
 export interface PropertyRates {
-  nightly?: number;
-  weekly?: number;
-  monthly?: number;
+  nightly?: number | undefined;
+  weekly?: number | undefined;
+  monthly?: number | undefined;
 }
 
 export interface SellerInfo {
@@ -17,21 +19,6 @@ export interface SellerInfo {
   email: string;
 }
 
-export interface PropertyCardProps {
+export interface PropertiesResponse extends PropertyInterface {
   _id: string;
-  owner: string;
-  name: string;
-  type: string;
-  description: string;
-  location: PropertyLocation;
-  beds: number;
-  baths: number;
-  square_feet: number;
-  amenities: string[];
-  rates: PropertyRates;
-  seller_info: SellerInfo;
-  images: string[];
-  is_featured: boolean;
-  created_at?: string;
-  updated_at?: string;
 }
