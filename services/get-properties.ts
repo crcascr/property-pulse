@@ -1,4 +1,4 @@
-const apiDomain: string | null = process.env.NEXT_PUBLIC_API_DOMAIN || null;
+import { apiDomain } from "@/constants/api-domain";
 
 export async function getProperties() {
   try {
