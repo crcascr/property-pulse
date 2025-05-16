@@ -4,6 +4,7 @@
         "home",
         "properties",
         "api",
-        "property"
+        "property",
+        "auth"
     ]
 }
