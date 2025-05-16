@@ -3,6 +3,7 @@
         "base",
         "home",
         "properties",
-        "api"
+        "api",
+        "property"
     ]
 }

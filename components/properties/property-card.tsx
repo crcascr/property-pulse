@@ -1,9 +1,9 @@
 import { PropertiesResponse, PropertyRates } from "@/interfaces";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
 import { FaMapMarker } from "react-icons/fa";
 import { FaBath, FaBed, FaMoneyBill, FaRulerCombined } from "react-icons/fa";
+import { Amenity } from "@/components/properties/amenity";
 
 export const PropertyCard = ({
   property,
@@ -40,12 +40,12 @@ export const PropertyCard = ({
         </h3>
         <div className="flex justify-center gap-4 text-gray-500 mb-4">
           <Amenity
-            amenity={property.beds}
+            amenity={property.baths}
             label="Baths"
             icon={<FaBath className="inline mr-2" />}
           />
           <Amenity
-            amenity={property.baths}
+            amenity={property.beds}
             label="Beds"
             icon={<FaBed className="inline mr-2" />}
           />
@@ -77,21 +77,6 @@ export const PropertyCard = ({
         </div>
       </div>
     </div>
-  );
-};
-
-interface AmenityProps {
-  amenity: number;
-  label: string;
-  icon: ReactNode;
-}
-
-const Amenity = ({ amenity, label, icon }: AmenityProps) => {
-  return (
-    <p className="flex items-center">
-      {icon} {amenity}{" "}
-      <span className="md:hidden lg:inline ml-0.5">{label}</span>
-    </p>
   );
 };
 
