@@ -1,5 +1,6 @@
 "use client";
 
+import { Spinner } from "@/components";
 import { PropertyHeader, PropertyInformation } from "@/components/property";
 import { PropertiesResponse } from "@/interfaces";
 import { getProperty } from "@/services";
@@ -33,7 +34,7 @@ export default function PropertyPage() {
     }
   }, [id, property]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner loading={loading} />;
   if (error) return <p>{error}</p>;
   if (!property && !loading) {
     return (
