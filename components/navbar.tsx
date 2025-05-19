@@ -6,17 +6,40 @@ import profileDefault from "@/assets/images/profile.png";
 import { NavItemProps } from "@/interfaces/navbar";
 import NavItem from "@/components/navbar/nav-item";
 import { FaBars, FaGoogle, FaRegBell } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { HiHome } from "react-icons/hi2";
+import {
+  ClientSafeProvider,
+  getProviders,
+  LiteralUnion,
+  signIn,
+  useSession,
+} from "next-auth/react";
+import { BuiltInProviderType } from "next-auth/providers/index";
 
 export const Navbar = () => {
   const pathname = usePathname();
 
+  const { data: session } = useSession();
+
   // Dropdown states
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [providers, setProviders] = useState<Record<
+    LiteralUnion<BuiltInProviderType, string>,
+    ClientSafeProvider
+  > | null>(null);
+
+  useEffect(() => {
+    const setAuthProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+    setAuthProviders();
+  }, []);
+
+  console.log(providers);
 
   // Navbar items
   const navItems: NavItemProps[] = [
@@ -30,7 +53,7 @@ export const Navbar = () => {
       href: "/properties/add",
       text: "Add Property",
       selected: pathname === "/properties/add",
-      show: isLoggedIn,
+      show: session,
     },
   ];
 
@@ -79,21 +102,25 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {!isLoggedIn && (
+          {!session && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                <button
-                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
-                  onClick={() => setIsLoggedIn((prev) => !prev)}
-                >
-                  <FaGoogle className="mr-2" />
-                  <span>Login or Register</span>
-                </button>
+                {providers &&
+                  Object.values(providers).map((provider, index) => (
+                    <button
+                      className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                      onClick={() => signIn(provider.id)}
+                      key={index}
+                    >
+                      <FaGoogle className="mr-2" />
+                      <span>Login or Register</span>
+                    </button>
+                  ))}
               </div>
             </div>
           )}
 
-          {isLoggedIn && (
+          {session && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="/messages" className="relative group">
                 <button
@@ -186,15 +213,18 @@ export const Navbar = () => {
                 show={item.show}
               />
             ))}
-            {!isLoggedIn && (
-              <button
-                className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
-                onClick={() => setIsLoggedIn((prev) => !prev)}
-              >
-                <FaGoogle className="mr-2" />
-                <span>Login or Register</span>
-              </button>
-            )}
+            {!session &&
+              providers &&
+              Object.values(providers).map((provider, index) => (
+                <button
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
+                  onClick={() => signIn(provider.id)}
+                  key={index}
+                >
+                  <FaGoogle className="mr-2" />
+                  <span>Login or Register</span>
+                </button>
+              ))}
           </div>
         </div>
       )}
