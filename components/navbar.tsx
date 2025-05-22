@@ -23,6 +23,10 @@ export const Navbar = () => {
 
   const { data: session } = useSession();
 
+  console.log(session);
+
+  const profilePicture = session?.user?.image;
+
   // Dropdown states
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
@@ -38,8 +42,6 @@ export const Navbar = () => {
     };
     setAuthProviders();
   }, []);
-
-  console.log(providers);
 
   // Navbar items
   const navItems: NavItemProps[] = [
@@ -149,11 +151,12 @@ export const Navbar = () => {
                     <span className="absolute -inset-1.5"></span>
                     <span className="sr-only">Open user menu</span>
                     <Image
-                      src={profileDefault}
+                      src={profilePicture || profileDefault}
                       alt="Profile"
                       width={32}
                       height={32}
                       className="h-8 w-8 rounded-full"
+                      priority
                     />
                   </button>
                 </div>

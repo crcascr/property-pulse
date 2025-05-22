@@ -1,6 +1,17 @@
+import { connectDB } from "@/config/database";
+import User from "@/models/User";
 import { getEnvVar } from "@/utils/get-env-var";
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+
+interface ExtendedSession extends Session {
+  user: {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    id?: string;
+  };
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,4 +27,40 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async signIn({ profile }) {
+      console.log(profile);
+      // Connect to the database
+      await connectDB();
+      // Check if the user already exists in the database
+      const userExists = await User.findOne({ email: profile?.email });
+      // If the user not exists, add it to the database
+      if (!userExists) {
+        const userName = profile?.name?.slice(0, 20);
+
+        await User.create({
+          email: profile?.email,
+          username: userName,
+          image: profile?.image,
+        });
+      }
+      // Allow the user to sign in
+      return true;
+    },
+    async session({ session }): Promise<ExtendedSession> {
+      // Get the user from the database
+      const user = await User.findOne({ email: session?.user?.email });
+
+      // Return the extended session
+      return {
+        ...session,
+        user: {
+          name: user?.username,
+          email: user?.email,
+          image: user?.image,
+          id: user?.id,
+        },
+      };
+    },
+  },
 };
