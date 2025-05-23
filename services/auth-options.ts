@@ -29,19 +29,24 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ profile }) {
+      const googleProfile = profile as {
+        email?: string;
+        name?: string;
+        picture?: string;
+      };
       console.log(profile);
       // Connect to the database
       await connectDB();
       // Check if the user already exists in the database
-      const userExists = await User.findOne({ email: profile?.email });
+      const userExists = await User.findOne({ email: googleProfile?.email });
       // If the user not exists, add it to the database
       if (!userExists) {
         const userName = profile?.name?.slice(0, 20);
 
         await User.create({
-          email: profile?.email,
+          email: googleProfile?.email,
           username: userName,
-          image: profile?.image,
+          image: googleProfile?.picture,
         });
       }
       // Allow the user to sign in
