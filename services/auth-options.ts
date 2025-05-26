@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         name?: string;
         picture?: string;
       };
-      console.log(profile);
+
       // Connect to the database
       await connectDB();
       // Check if the user already exists in the database

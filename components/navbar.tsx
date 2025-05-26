@@ -54,7 +54,7 @@ export const Navbar = () => {
       href: "/properties/add",
       text: "Add Property",
       selected: pathname === "/properties/add",
-      show: session,
+      show: !!session,
     },
   ];
 
